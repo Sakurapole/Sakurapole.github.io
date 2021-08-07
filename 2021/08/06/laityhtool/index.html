@@ -702,7 +702,7 @@
       
         <div class="post-detail-header_wordcount">
           <span class="totalcount">
-            <i class="fa fa-file-text-o"></i> Words: 306 |
+            <i class="fa fa-file-text-o"></i> Words: 486 |
           </span>
   
           <span class="min2read">
@@ -755,8 +755,17 @@
   webPreferences<span class="token operator">:</span> <span class="token punctuation">&#123;</span>
     nodeIntegration<span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span> <span class="token comment">//在网页中集成Node，electron高版本默认关闭</span>
   <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="Electron配置请求头的Referer"><a href="#Electron配置请求头的Referer" class="headerlink" title="Electron配置请求头的Referer"></a>Electron配置请求头的Referer</h4><p>由于请求B站下的资源需要请求中携带B站的Referer，而Referer是没有办法直接在axios中设置的，会抛出unsafe-header，因为浏览器不允许修改Referer，所以我们直接修改electorn即可，因为electron是提供浏览器环境的。在electron的主进程index.js中设置一下代码</p>
+<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token keyword">const</span> bilibiliFilter <span class="token operator">=</span> <span class="token punctuation">&#123;</span> <span class="token comment">// 当请求这些链接时需要携带Referer</span>
+  urls<span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"https://*.bilibili.com/*"</span><span class="token punctuation">,</span> <span class="token string">"http://*.bilibili.com/*"</span><span class="token punctuation">,</span> <span class="token string">"http://*.hdslb.com/*"</span><span class="token punctuation">,</span> <span class="token string">"https://*.bilivideo.com/*"</span><span class="token punctuation">,</span> <span class="token string">"https://*/*"</span><span class="token punctuation">]</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token comment">// electron的session模块提供了在发送请求前修改请求头的方法 使用前需要导入session：const &#123; session &#125; = require('electron')</span>
+session<span class="token punctuation">.</span>defaultSession<span class="token punctuation">.</span>webRequest<span class="token punctuation">.</span><span class="token function">onBeforeSendHeaders</span><span class="token punctuation">(</span>bilibiliFilter<span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token parameter">details<span class="token punctuation">,</span> callback</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+  details<span class="token punctuation">.</span>requestHeaders<span class="token punctuation">[</span><span class="token string">'Referer'</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token string">'http://www.bilibili.com'</span>
+  <span class="token function">callback</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span> requestHeaders<span class="token operator">:</span> details<span class="token punctuation">.</span>requestHeaders <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <h3 id="项目后端问题"><a href="#项目后端问题" class="headerlink" title="项目后端问题"></a>项目后端问题</h3>
       </div>
