@@ -1379,7 +1379,7 @@
         :data="listData"
         :class-option="classOption"
         class="warp"
-        style="height: 30px"
+        style="height: 60px"
       >
         <ul class="index-notice-content__ul">
           
@@ -1388,13 +1388,30 @@
               
                 <div class="index-notice-content__title">
                   
-                    <a href="/archives" title="LaityHTool项目正在开发中..." style="color:blue">
-                      LaityHTool项目正在开发中...
+                    <a href="/2021/08/06/laityhtool/" title="LaityHTool项目1.0已经开发完毕，项目链接：https://github.com/Sakurapole/LaityHTool" style="color:blue">
+                      LaityHTool项目1.0已经开发完毕，项目链接：https://github.com/Sakurapole/LaityHTool
                     </a>
                   
                 </div>
                 
                   <div class="index-notice-content__date" style="color:blue">
+                    2021-08-06
+                  </div>
+                
+              
+            </li>
+          
+            <li>
+              
+                <div class="index-notice-content__title">
+                  
+                    <span title="Lodash源码阅读" style="">
+                      Lodash源码阅读
+                    </span>
+                  
+                </div>
+                
+                  <div class="index-notice-content__date" style="">
                     2021-08-06
                   </div>
                 
@@ -1414,7 +1431,7 @@
 <script>
   var seamless = JSON.parse('false');
   seamless = seamless ? 0 : 30;
-  var listData = '[object Object]' || '';
+  var listData = '[object Object],[object Object]' || '';
   listData = listData.split(',');
   var vm = new Vue({
     el: '#appIndexNotice',
@@ -1498,7 +1515,9 @@
             
           </div>
           <div class="post-content">
-            
+            Lodash简介高性能、模块化的JS工具库
+数组方法chunk根据传入的size切分数组，返回一个二维数组结果
+// chunk(['a', 'b', 'c', 'd'], 2) -> [['a', 'b'], ['c', 'd']] 传入
           </div>
         </div>
         <div class="post-more">
@@ -1553,12 +1572,9 @@
             
           </div>
           <div class="post-content">
-            LaityHTool项目简介LaityHTool是一个我自己想到什么功能就会加在上面的项目，运行于整个PC平台，预计会开发的功能大概有：
+            LaityHTool项目简介（1.0版本更新完毕）LaityHTool是一个我自己想到什么功能就会加在上面的项目，运行于整个PC平台，预计会开发的功能大概有：
 
-Todo列表（实现云同步） √
-BDownloader（B站下载器）
-收藏夹下载 √
-AV/BV号下
+项目地址：https://github.com/Sakurapole/Lait
           </div>
         </div>
         <div class="post-more">
