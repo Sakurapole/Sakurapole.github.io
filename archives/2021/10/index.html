@@ -11,7 +11,7 @@
   <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-  <title>Lodash源码解读 | LaityH的博客</title>
+  <title>archives: 2021/10 | LaityH的博客</title>
 
   
     
@@ -642,543 +642,103 @@
 
     <!-- 内容区域 -->
     <main class="main" id="pjax-container" style="margin-top: 0;">
-      
- <!-- prismjs 代码高亮 -->
- 
-    
-    <link href="/js/prism/prism-line-numbers.css" rel="stylesheet">
-    
-        <link href="/js/prism/prism-coy.min.css" rel="stylesheet">
-    
-
-    <style>
-        pre[class*="language-"] {
-            overflow-y: hidden;
-        }
-        .line-numbers .line-numbers-rows {
-            border: none;
-        }
-    </style>
-  
-
-
-<div class="bg-dark-floor" style="position: fixed;left: 0;top: 0;width: 100%;height: 100%;z-index: -1;"></div>
-
-<!-- 文章详情页顶部图片和标题 -->
-
-
-
-
-<div class="post-detail-header lazyload" id="thumbnail_canvas" data-original="https://i0.hdslb.com/bfs/album/2e5a4c015bc19e6fc94ac9c3cbc0cd6c9c22195b.png" style="background-repeat: no-repeat; background-size: cover; 
-  background-position: center center;position: relative;">
-  <div class="post-detail-header-mask"></div>
-  <canvas id="header_canvas"style="position:absolute;bottom:0;pointer-events:none;"></canvas>
-  
-  <div class="post-detail-header_info-box">
-    <div class="title-box">
-      <span class="title">
-        Lodash源码解读
-      </span>
-    </div>
-    
-    
-      
-        <span class="post-detail-header_date">
-          <i class="fa fa-calendar"></i> Published in：2021-08-09 |
-        </span>
-      
-
-      
-        <span class="post-detail-header_categories">
-          <i class="iconfont iconbookmark1"></i> category：
-          
-            <a href="/categories/%E5%89%8D%E7%AB%AF/" class="post-detail-header_category">
-              前端
-            </a>
-          
-        </span>
-      
-
-      
-        <div class="post-detail-header_wordcount">
-          <span class="totalcount">
-            <i class="fa fa-file-text-o"></i> Words: 711 |
-          </span>
-  
-          <span class="min2read">
-            <i class="fa fa-clock-o"></i> Reading time: 3min |
-          </span>
-  
-          
-            <span class="reading">
-              <i class="fa fa-eye"></i> reading：<span id="busuanzi_value_page_pv"></span>
-            </span>
-          
-        </div>
-      
-    
+      <div class="bg-dark-floor" style="position: fixed;left: 0;top: 0;width: 100%;height: 100%;z-index: -2;"></div>
+<div class="bg-light-floor-archive" style="position: fixed;left: 0;top: 0;width: 100%;height: 100%;z-index: -3;"></div>
+<div class="lazyload archive-header" data-original="https://pic1.zhimg.com/80/v2-1414b3a4b205e19060db18a20d08723a_1440w.jpg?source=1940ef5c" >
+  <div class="archive-header-title">
+    Archive
   </div>
+  <div class="archive-header-desc">
   
-  
-    <script src="/js/bubble/bubble.js"></script>
-  
-</div>
-
-
-
-<div class="row justify-position">
-  <div class="main-content">
-    <article class="post post-detail">
-      
-      <div class="post-content">
-        <h3 id="Lodash简介"><a href="#Lodash简介" class="headerlink" title="Lodash简介"></a>Lodash简介</h3><p>高性能、模块化的JS工具库</p>
-<h3 id="数组方法"><a href="#数组方法" class="headerlink" title="数组方法"></a>数组方法</h3><h4 id="chunk"><a href="#chunk" class="headerlink" title="chunk"></a>chunk</h4><p>根据传入的size切分数组，返回一个二维数组结果</p>
-<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token comment">// chunk(['a', 'b', 'c', 'd'], 2) -> [['a', 'b'], ['c', 'd']] 传入size刚好能被数组length整除时</span>
-
-<span class="token comment">// chunk(['a', 'b', 'c', 'd'], 3) -> [['a', 'b', 'c'], ['c']]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-<p><strong>源码</strong></p>
-<pre class="line-numbers language-JavaScript" data-language="JavaScript"><code class="language-JavaScript">function chunk(array, size&#x3D;1) &#123;
-    size &#x3D; Math.max(toInteger(size), 0) &#x2F;&#x2F; 强转为整数
-    const length &#x3D; array &#x3D;&#x3D; null ? 0 : array.length &#x2F;&#x2F; 判断传入数组是否为null值
-    if (!length || size &lt; 1) &#123;
-        return [] &#x2F;&#x2F; 当传入的数组为空或者需要划分的size不大于一时返回[]
-    &#125;
-    let index &#x3D; 0
-    let resIndex &#x3D; 0
-    const result &#x3D; new Array(Math.ceil(length &#x2F; size)) &#x2F;&#x2F; 创建一个长度为划分过后大小的数组
-    while (index &lt; length) &#123;
-        result[resIndex++] &#x3D; slice(array, index, (index +&#x3D; size)) &#x2F;&#x2F; slice函数根据索引切割数组(lodash中的slice函数用于正确返回，代替了原本的Array的cancat函数)
-    &#125;)
-&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h4 id="compact"><a href="#compact" class="headerlink" title="compact"></a>compact</h4><p>传入一个数组，返回一个过滤掉false、null、0、””、undefined、NaN的新数组</p>
-<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token function">compact</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token boolean">false</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token string">''</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">></span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p><strong>源码</strong></p>
-<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token keyword">function</span> <span class="token function">compact</span><span class="token punctuation">(</span><span class="token parameter">array</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">let</span> resIndex <span class="token operator">=</span> <span class="token number">0</span>
-    <span class="token keyword">const</span> result <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
-    
-    <span class="token keyword">if</span> <span class="token punctuation">(</span>array <span class="token operator">==</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> <span class="token comment">// 判断array为null时</span>
-        <span class="token keyword">return</span> result
-    <span class="token punctuation">&#125;</span>
-
-    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">const</span> value <span class="token keyword">of</span> array<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">if</span> <span class="token punctuation">(</span>value<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> <span class="token comment">// 过滤</span>
-            result<span class="token punctuation">[</span>resIndex<span class="token operator">++</span><span class="token punctuation">]</span> <span class="token operator">=</span> value
-        <span class="token punctuation">&#125;</span>
-    <span class="token punctuation">&#125;</span>
-    <span class="token keyword">return</span> result
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<!-- #### concat -->
-
-<h4 id=""><a href="#" class="headerlink" title=""></a></h4><h4 id="difference"><a href="#difference" class="headerlink" title="difference"></a>difference</h4><p>传入多个数组，第一个作为标准，把第一个数组存在而后续数组不存在的值作为新数组的元素。</p>
-<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token comment">// difference([3,2,1], [3,5]) -> [2,1]</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p><strong>源码</strong></p>
-<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token comment">/**
- * 函数解释：
- * isArrayLikeObject：检查传入的value是否是可转为数组或者是数组
- * baseDifference：difference方法没有实现多个数组
- * baseFlatten：flatten展开数组函数的没有实现限制条件的方法
- **/</span>
-<span class="token keyword">function</span> <span class="token function">difference</span> <span class="token punctuation">(</span><span class="token parameter">array<span class="token punctuation">,</span> <span class="token operator">...</span>value</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> <span class="token comment">// 传入数组，然后将除了第一个数组外的值展开到一个数组</span>
-    <span class="token comment">/**
-     * 首先判断传入的array是否是数组形式或可转为数组，
-     * 若为true，则使用baseDifference将array和value进行difference，
-     * 若false，返回true
-     **/</span>
-    <span class="token keyword">return</span> <span class="token function">isArrayLikeObject</span><span class="token punctuation">(</span>array<span class="token punctuation">)</span> <span class="token operator">?</span> <span class="token function">baseDifference</span><span class="token punctuation">(</span>array<span class="token punctuation">,</span> <span class="token function">baseFlatten</span><span class="token punctuation">(</span>values<span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> isArrayLikeObject<span class="token punctuation">,</span> <span class="token boolean">true</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">:</span> <span class="token boolean">true</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h4 id="differenceBy-array-values-iteratee"><a href="#differenceBy-array-values-iteratee" class="headerlink" title="differenceBy(array, values, iteratee)"></a>differenceBy(array, values, iteratee)</h4><p>类似于difference函数，但是它多接收一个iteratee(迭代器)，使用迭代器分别迭代array和values，把迭代过后的值作为比较用的值。并且这个方法的返回值是一个新数组</p>
-<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token comment">// differenceBy([2.1, 1.2], [2.3, 3.4], Math.floor) -> [1.2]</span>
-<span class="token function">differenceBy</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">&#123;</span><span class="token string">'x'</span><span class="token operator">:</span> <span class="token number">2</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span> <span class="token punctuation">&#123;</span><span class="token string">'x'</span><span class="token operator">:</span> <span class="token number">1</span><span class="token punctuation">&#125;</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token punctuation">&#123;</span><span class="token string">'x'</span><span class="token operator">:</span> <span class="token number">1</span><span class="token punctuation">&#125;</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token string">'x'</span><span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">></span> <span class="token punctuation">[</span><span class="token punctuation">&#123;</span><span class="token string">'x'</span><span class="token operator">:</span> <span class="token number">2</span><span class="token punctuation">&#125;</span><span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-<p><strong>源码</strong></p>
-<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token comment">/**
- * 函数解释：
- * last：获取数组的最后一个元素
- **/</span>
-<span class="token keyword">function</span> <span class="token function">differenceBy</span><span class="token punctuation">(</span><span class="token parameter">array<span class="token punctuation">,</span> <span class="token operator">...</span>values</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">let</span> iteratee <span class="token operator">=</span> <span class="token function">last</span><span class="token punctuation">(</span>values<span class="token punctuation">)</span> <span class="token comment">// 获取迭代器</span>
-    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">isArrayLikeObject</span><span class="token punctuation">(</span>iteratee<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> <span class="token comment">// 判断迭代器是否是数组形状或者Object</span>
-        iteratee <span class="token operator">=</span> <span class="token keyword">undefined</span>
-    <span class="token punctuation">&#125;</span>
-    <span class="token comment">/**
-     * 首先判断传入的array是否是数组形状，
-     * 若为true，使用baseDifference函数返回
-     * 若为false，返回[]
-     **/</span>
-    <span class="token keyword">return</span> <span class="token function">isArrayLike</span><span class="token punctuation">(</span>array<span class="token punctuation">)</span> <span class="token operator">?</span> <span class="token function">baseDifference</span><span class="token punctuation">(</span>array<span class="token punctuation">,</span> <span class="token function">baseFlatten</span><span class="token punctuation">(</span>values<span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> isArrayLikeObject<span class="token punctuation">,</span> <span class="token boolean">true</span><span class="token punctuation">)</span><span class="token punctuation">,</span> iteratee<span class="token punctuation">)</span> <span class="token operator">:</span> 【
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h4 id="differenceWith-array-values-comparator"><a href="#differenceWith-array-values-comparator" class="headerlink" title="differenceWith(array, values, comparator)"></a>differenceWith(array, values, comparator)</h4><p>依旧是类似与difference的一个方法，但是多接收一个comparator(比较器)的函数</p>
-
-      </div>
-      <div class="post-tags-categories">
-        
-        <div class="tags">
-          
-            <a href="/tags/%E6%BA%90%E7%A0%81%E8%A7%A3%E8%AF%BB/" class="">
-              源码解读
-            </a>
-          
-        </div>
-        
-      </div>
-      
-        <div class="copyright">
-  <ul class="post-copyright">
-    <li class="post-copyright-author">
-    <strong>author:  </strong>LaityH</a>
-    </li>
-    <li class="post-copyright-link">
-    <strong>link:  </strong>
-    <a href="/2021/08/09/lodashread/" target="_blank" title="Lodash源码解读">https://sakurapole.github.io/2021/08/09/lodashread/</a>
-    </li>
-    <li class="post-copyright-license">
-      <strong>Copyright notice:   </strong>
-      All articles on this website, unless otherwise stated, adopt <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">CC BY-NC-ND 4.0</a>
-      reprint policy. If reproduced, please indicate source!
-    </li>
-  </ul>
-<div>
-      
-    </article>
-    <!-- 上一篇文章和下一篇文章 -->
-    
-      <!-- 文章详情页的上一页和下一页 -->
-<div class="post-nav">
-
-
-
-  
-  <div class="post-nav-prev post-nav-item">
-    <div class="post-nav-img lazyload" data-original="https://i0.hdslb.com/bfs/album/d32c4dec2b7bdacd62819ec196fdf731e9c0cf53.jpg" style="background-size: cover; 
-      background-position: center center;">
-    </div>
-    <a href="/2021/10/26/laityhtoolprojectversiondoc/" class="post-nav-link">
-      <div class="title">
-        <i class="fa fa-angle-left"></i> Prev:
-        <div class="title-text">LaityH开发版本文档</div>
-      </div>
-      
-      <!-- <div class="content">
-        前端部分主题功能1.1.x
-实现黑夜白天主题功能切换2.x
-增减material dark/white实现
-
-TodoL
-      </div> -->
-    </a>
-  </div>
-
-
-
-  
-  <div class="post-nav-next post-nav-item">
-    <div class="post-nav-img lazyload" data-original="https://i0.hdslb.com/bfs/album/d32c4dec2b7bdacd62819ec196fdf731e9c0cf53.jpg" style="background-size: cover; 
-      background-position: center center;">
-    </div>
-    <a href="/2021/08/06/laityhtool/" class="post-nav-link">
-      <div class="title">
-        Next: <i class="fa fa-angle-right"></i>
-        <div class="title-text">LaityH开发文档</div>
-      </div>
-      <!-- <div class="content">
-        LaityHTool项目简介（1.0版本更新完毕）LaityHTool是一个我自己想到什么功能就会加在上面的项目，运行于
-      </div> -->
-    </a>
-  </div>
-
-</div>
-
-    
-    
-
-    <!-- 打赏 -->
-    
-      <div id="appDonate" class="post-donate">
-  <div id="donate_board" class="donate_bar center" ref="donate">
-    <a id="btn_donate" class="btn_donate" href="javascript:;" title="打赏" @click="showDialogDrawer()"></a>
-  </div>
-  <transition name="fade">
-    <div 
-      class="donate-box-mask"
-      v-cloak 
-      v-if="visible"
-      @click="cancelDialogDrawer()"
-    >
-    </div>
-  </transition>
-  <transition name="bounce">
-    <div class="donate-box" v-cloak v-if="visible">
-      <div class="donate-box_close">
-        <i class="fa fa-times" aria-hidden="true" @click="cancelDialogDrawer" pointer></i>
-      </div>
-      <div class="donate-box_title">
-        <h4>
-          你的赏识是我前进的动力
-        </h4>
-      </div>
-      <div class="donate-box_tab">
-        <div class="Alipay" pointer :class="{'active': tabActive === 'Alipay'}" @click="changeTabActive('Alipay')">
-          支付宝
-        </div>
-        <div class="WeChatpay" pointer :class="{'active': tabActive === 'WeChatpay'}" @click="changeTabActive('WeChatpay')">
-          微信
-        </div>
-      </div>
-      <div class="donate-box_img">
-        <div class="AlipayImg" v-if="tabActive === 'Alipay'">
-          <img src="/medias/zfb.jpg" alt="支付宝打赏" />
-        </div> 
-        <div class="WeChatpayImg" v-if="tabActive === 'WeChatpay'">
-          <img src="/medias/wx.jpg" alt="微信打赏" />
-        </div>
-      </div>
-    </div>
-  </transition>
-</div>
-
-<script>
-  var body = document.body || document.documentElement || window;
-  var vm = new Vue({
-    el: '#appDonate',
-    data: {
-      visible: false,
-      tabActive: 'Alipay',
-      top: 0,
-    },
-    computed: {
-    },
-    mounted() {
-    },
-    methods: {
-      showDialogDrawer() {
-        this.visible = true;
-        // 防止页面滚动，只能让弹框滚动
-        // function getScroll() {
-        //   return {
-        //     left: window.pageXOffset || document.documentElement.scrollLeft || document.body.scrollLeft || 0,
-        //     top: window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0
-        //   };
-        // }
-        this.top = $(document).scrollTop() // or getScroll().top
-        // console.log('aa', $('.main-content'));
-        body.style.cssText = 'overflow: hidden;';
-      },
-      cancelDialogDrawer() {
-        this.visible = false;
-        body.removeAttribute('style');
-        $(document).scrollTop(this.top)
-      },
-      changeTabActive(name) {
-        this.tabActive = name;
-      }
-    },
-    created() {}
-  })
-</script>
-    
-
-    <!-- 分享 -->
-    
-      <!-- https://github.com/overtrue/share.js -->
-<!-- 文章详情页的分享 -->
-<div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
-
-<script src="/js/shareJs/social-share.min.js"></script>
-</script>
-
-<style>
-  .social-share {
-    margin: 20px 0;
-  }
-</style>
-
-
-    
-    
-    <!-- 评论 -->
-    <!-- 评论 -->
-
-  <div id="myComment">
-    
-  </div>
-
-
-  </div>
-
-  <!-- 目录 -->
-  <!-- 文章详情页右侧目录 -->
-
-  <div class="toc-aside">
-    <div class="toc-main">
-      <div class="toc-aside-title">
-        <i class="fa fa-list-ul" aria-hidden="true"></i><span>catalog</span>
-        
-          <div class="toc-open-close">catalog</div>
-        
-      </div>
-      <div class="toc-content">
-        <div class="toc"></div>
-      </div>
-    </div>
-  </div>
-  <!-- js在scripts目录下的的toc.ejs里面 -->
-  
-
+  <span class="title" id="archive-header-desc"></span>
   <script>
-    function openBtnClickFn () {
-      let openOrCloseBtn = $('.toc-aside .toc-aside-title .toc-open-close');
-      let open = eval('' || 'true');
-      openOrCloseBtn.click(function() {
-        if (open === true) {
-          $(".toc-aside").css({'width': 0, 'padding': 0});
-          $(".toc-content").css({'width': 0});
-          $(".toc-aside-title span, .toc-aside-title i").css({'display': 'none'});
-          $(".main-content").css({'width': '75%', 'margin': '10px auto'});
-          open = false;
-        } else {
-          $(".toc-aside").css({'width': '300px', 'padding': '0 10px'});
-          $(".toc-content").css({'width': '300px'});
-          $(".toc-aside-title span, .toc-aside-title i").css({'display': 'inline-block'});
-          $(".main-content").css({'width': '65%', 'margin-right': '10px', 'margin-left': 'calc(35% - 350px)'});
-          open = true;
-        }
-      });
-    };
-    openBtnClickFn();
-    document.addEventListener('pjax:complete', function () {
-      openBtnClickFn();
-    })
-  </script>
-
-
-  
-
-  <!-- 图片放大 Wrap images with fancybox support -->
-  <script src="/js/wrapImage.js"></script>
-</div>
-
-<!-- 文章详情页背景图 -->
-<div id="appBgSwiper" style="position: fixed;left: 0;top: 0;width: 100%;height: 100%;z-index: -2;" :style="{'background-color': bgColor ? bgColor : 'transparent'}">
-    <transition-group tag="ul" :name="names">
-        <li v-for='(image,index) in img' :key='index' v-show="index === mark" class="bg-swiper-box">
-            <img :src="image" class="bg-swiper-img">
-        </li>
-    </transition-group>
-</div>
-<script>
-    var vm = new Vue({
-        el: '#appBgSwiper',
-        data: {
-            names: '' || 'fade' || 'fade', // translate-fade fade
-            mark: 0,
-            img: [],
-            bgColor: '',
-            time: null
-        },
-        methods: {   //添加方法
-            change(i, m) {
-                if (i > m) {
-                    // this.names = 'fade';
-                } else if (i < m) {
-                    // this.names = 'fade';
-                } else {
-                    return;
-                }
-                this.mark = i;
-            },
-            prev() {
-                // this.names = 'fade';
-                this.mark--;
-                if (this.mark === -1) {
-                    this.mark = 3;
-                    return
-                }
-            },
-            next() {
-                // this.names = 'fade';
-                this.mark++;
-                if (this.mark === this.img.length) {
-                    this.mark = 0;
-                    return
-                }
-            },
-            autoPlay() {
-                // this.names = 'fade';
-                this.mark++;
-                if (this.mark === this.img.length) {
-                    this.mark = 0;
-                    return
-                }
-            },
-            play() {
-                let bgImgDelay = '' || '180000'
-                let delay = parseInt(bgImgDelay) || 180000;
-                this.time = setInterval(this.autoPlay, delay);
-            },
-            enter() {
-                clearInterval(this.time);
-            },
-            leave() {
-                this.play();
-            }
-        },
-        created() {
-            this.play()
-        },
-        beforeDestroy() {
-            clearInterval(this.time);
-        },
-        mounted() {
-            let prop = ''|| 'https://i0.hdslb.com/bfs/album/139089545700df783417c5f304286f3ace78ee99.jpg';
-            let isImg = prop.includes('.bmp') || prop.includes('.jpg') || prop.includes('.png') || prop.includes('.tif') || prop.includes('.gif') || prop.includes('.pcx') || prop.includes('.tga') || prop.includes('.exif') || prop.includes('.fpx') || prop.includes('.psd') || prop.includes('.cdr') || prop.includes('.pcd') || prop.includes('.dxf') || prop.includes('.ufo') || prop.includes('.eps') || prop.includes('.ai') || prop.includes('.raw') || prop.includes('.WMF') || prop.includes('.webp') || prop.includes('.jpeg') || prop.includes('http://') || prop.includes('https://') 
-            if (isImg) {
-                let img = prop.split(',');
-                let configRoot = '/'
-                let arrImg = [];
-                img.forEach(el => {
-                    var Expression=/http(s)?:\/\/([\w-]+\.)+[\w-]+(\/[\w- .\/?%&=]*)?/;
-			        var objExp = new RegExp(Expression);
-
-                    if(objExp.test(el)) {
-                        // http or https
-                        arrImg.push(el);
-                    } else {
-                        // 非http or https开头
-                        // 本地文件
-                        let firstStr = el.charAt(0);
-                        if (firstStr == '/') {
-                            el = el.substr(1); // 删除第一个字符 '/',因为 configRoot最后一个字符为 /
-                        }
-                        el = configRoot + el;
-                        arrImg.push(el);
-                    }
-                })
-                this.img = arrImg;
-            } else {
-                this.bgColor = prop;
-            }
-        }
-    })
+  function typedFn() {
+    const el = '#archive-header-desc';
+    const type = 'archive';
+    let desc = '长笛一声人倚楼'
+    var typed = new Typed(el, {
+      strings: [desc],
+      startDelay: 100,
+      typeSpeed: 100,
+      loop: true,
+      backSpeed: 50,
+      showCursor: true
+    });
+  }
+  typedFn();
 </script>
+  
+  </div>
+  <div class="mask-box"></div>
+</div>
 
-<style>
-    .bg-swiper-box {
-        position: absolute;
-        display: block;
-        width: 100%;
-        height: 100%;
-    }
-    .bg-swiper-img {
-        object-fit: cover;
-        width: 100%;
-        height: 100%;
-    }
-</style>
+<div class="archive-video">
+  <video class="full-video" autoplay loop muted>
+      <source style="width: 100%;height: 100vh;" src="/">
+  </video>
+  <div class="video-header-title">
+    Archive
+  </div>
+  <div class="video-header-desc">
+  
+      <span class="title" id="archive-video-header-desc"></span>
+      <script>
+  function typedFn() {
+    const el = '#archive-video-header-desc';
+    const type = 'archive';
+    let desc = '长笛一声人倚楼'
+    var typed = new Typed(el, {
+      strings: [desc],
+      startDelay: 100,
+      typeSpeed: 100,
+      loop: true,
+      backSpeed: 50,
+      showCursor: true
+    });
+  }
+  typedFn();
+</script>
+      
+  </div>
+  <div class="mask-box"></div>
+</div>
 
+<!-- hash算法 -->
+
+
+<div class="archive-main">
+  <section class="archive">
+    <div class="archive-content">
+      <ul class="post-archive">
+        
+        
+          
+            
+            <div class="year" data-aos="zoom-in-up">
+                <div class="bullet"></div>
+                <a href="/archives/2021">2021</a>
+            </div>
+          
+          <li class="post-item" data-aos="fade-left">
+            
+            <div class="post-img-box">
+              <a href="/2021/10/26/laityhtoolprojectversiondoc/" class="post-img lazyload" data-original="https://i0.hdslb.com/bfs/album/d32c4dec2b7bdacd62819ec196fdf731e9c0cf53.jpg" style="background-size: cover; 
+                background-position: center center;">
+              </a>
+            </div>
+            <div class="post-date-title">
+              <div>
+                <span class="post-date">10-26</span>
+              </div>
+              <a class="post-title" href="/2021/10/26/laityhtoolprojectversiondoc/">LaityH开发版本文档</a>
+            </div>
+          </li>
+        
+      </ul>
+    </div>
+  </section>
+  
+</div>
     </main>
 
     <!-- 页脚 -->

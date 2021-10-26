@@ -11,7 +11,7 @@
   <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-  <title>Lodash源码解读 | LaityH的博客</title>
+  <title>LaityH开发版本文档 | LaityH的博客</title>
 
   
     
@@ -669,7 +669,7 @@
 
 
 
-<div class="post-detail-header lazyload" id="thumbnail_canvas" data-original="https://i0.hdslb.com/bfs/album/2e5a4c015bc19e6fc94ac9c3cbc0cd6c9c22195b.png" style="background-repeat: no-repeat; background-size: cover; 
+<div class="post-detail-header lazyload" id="thumbnail_canvas" data-original="https://i0.hdslb.com/bfs/album/d32c4dec2b7bdacd62819ec196fdf731e9c0cf53.jpg" style="background-repeat: no-repeat; background-size: cover; 
   background-position: center center;position: relative;">
   <div class="post-detail-header-mask"></div>
   <canvas id="header_canvas"style="position:absolute;bottom:0;pointer-events:none;"></canvas>
@@ -677,14 +677,14 @@
   <div class="post-detail-header_info-box">
     <div class="title-box">
       <span class="title">
-        Lodash源码解读
+        LaityH开发版本文档
       </span>
     </div>
     
     
       
         <span class="post-detail-header_date">
-          <i class="fa fa-calendar"></i> Published in：2021-08-09 |
+          <i class="fa fa-calendar"></i> Published in：2021-10-26 |
         </span>
       
 
@@ -702,11 +702,11 @@
       
         <div class="post-detail-header_wordcount">
           <span class="totalcount">
-            <i class="fa fa-file-text-o"></i> Words: 711 |
+            <i class="fa fa-file-text-o"></i> Words: 130 |
           </span>
   
           <span class="min2read">
-            <i class="fa fa-clock-o"></i> Reading time: 3min |
+            <i class="fa fa-clock-o"></i> Reading time: 1min |
           </span>
   
           
@@ -731,95 +731,32 @@
     <article class="post post-detail">
       
       <div class="post-content">
-        <h3 id="Lodash简介"><a href="#Lodash简介" class="headerlink" title="Lodash简介"></a>Lodash简介</h3><p>高性能、模块化的JS工具库</p>
-<h3 id="数组方法"><a href="#数组方法" class="headerlink" title="数组方法"></a>数组方法</h3><h4 id="chunk"><a href="#chunk" class="headerlink" title="chunk"></a>chunk</h4><p>根据传入的size切分数组，返回一个二维数组结果</p>
-<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token comment">// chunk(['a', 'b', 'c', 'd'], 2) -> [['a', 'b'], ['c', 'd']] 传入size刚好能被数组length整除时</span>
-
-<span class="token comment">// chunk(['a', 'b', 'c', 'd'], 3) -> [['a', 'b', 'c'], ['c']]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-<p><strong>源码</strong></p>
-<pre class="line-numbers language-JavaScript" data-language="JavaScript"><code class="language-JavaScript">function chunk(array, size&#x3D;1) &#123;
-    size &#x3D; Math.max(toInteger(size), 0) &#x2F;&#x2F; 强转为整数
-    const length &#x3D; array &#x3D;&#x3D; null ? 0 : array.length &#x2F;&#x2F; 判断传入数组是否为null值
-    if (!length || size &lt; 1) &#123;
-        return [] &#x2F;&#x2F; 当传入的数组为空或者需要划分的size不大于一时返回[]
-    &#125;
-    let index &#x3D; 0
-    let resIndex &#x3D; 0
-    const result &#x3D; new Array(Math.ceil(length &#x2F; size)) &#x2F;&#x2F; 创建一个长度为划分过后大小的数组
-    while (index &lt; length) &#123;
-        result[resIndex++] &#x3D; slice(array, index, (index +&#x3D; size)) &#x2F;&#x2F; slice函数根据索引切割数组(lodash中的slice函数用于正确返回，代替了原本的Array的cancat函数)
-    &#125;)
-&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h4 id="compact"><a href="#compact" class="headerlink" title="compact"></a>compact</h4><p>传入一个数组，返回一个过滤掉false、null、0、””、undefined、NaN的新数组</p>
-<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token function">compact</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token boolean">false</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token string">''</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">></span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p><strong>源码</strong></p>
-<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token keyword">function</span> <span class="token function">compact</span><span class="token punctuation">(</span><span class="token parameter">array</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">let</span> resIndex <span class="token operator">=</span> <span class="token number">0</span>
-    <span class="token keyword">const</span> result <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
-    
-    <span class="token keyword">if</span> <span class="token punctuation">(</span>array <span class="token operator">==</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> <span class="token comment">// 判断array为null时</span>
-        <span class="token keyword">return</span> result
-    <span class="token punctuation">&#125;</span>
-
-    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">const</span> value <span class="token keyword">of</span> array<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">if</span> <span class="token punctuation">(</span>value<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> <span class="token comment">// 过滤</span>
-            result<span class="token punctuation">[</span>resIndex<span class="token operator">++</span><span class="token punctuation">]</span> <span class="token operator">=</span> value
-        <span class="token punctuation">&#125;</span>
-    <span class="token punctuation">&#125;</span>
-    <span class="token keyword">return</span> result
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<!-- #### concat -->
-
-<h4 id=""><a href="#" class="headerlink" title=""></a></h4><h4 id="difference"><a href="#difference" class="headerlink" title="difference"></a>difference</h4><p>传入多个数组，第一个作为标准，把第一个数组存在而后续数组不存在的值作为新数组的元素。</p>
-<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token comment">// difference([3,2,1], [3,5]) -> [2,1]</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p><strong>源码</strong></p>
-<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token comment">/**
- * 函数解释：
- * isArrayLikeObject：检查传入的value是否是可转为数组或者是数组
- * baseDifference：difference方法没有实现多个数组
- * baseFlatten：flatten展开数组函数的没有实现限制条件的方法
- **/</span>
-<span class="token keyword">function</span> <span class="token function">difference</span> <span class="token punctuation">(</span><span class="token parameter">array<span class="token punctuation">,</span> <span class="token operator">...</span>value</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> <span class="token comment">// 传入数组，然后将除了第一个数组外的值展开到一个数组</span>
-    <span class="token comment">/**
-     * 首先判断传入的array是否是数组形式或可转为数组，
-     * 若为true，则使用baseDifference将array和value进行difference，
-     * 若false，返回true
-     **/</span>
-    <span class="token keyword">return</span> <span class="token function">isArrayLikeObject</span><span class="token punctuation">(</span>array<span class="token punctuation">)</span> <span class="token operator">?</span> <span class="token function">baseDifference</span><span class="token punctuation">(</span>array<span class="token punctuation">,</span> <span class="token function">baseFlatten</span><span class="token punctuation">(</span>values<span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> isArrayLikeObject<span class="token punctuation">,</span> <span class="token boolean">true</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">:</span> <span class="token boolean">true</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h4 id="differenceBy-array-values-iteratee"><a href="#differenceBy-array-values-iteratee" class="headerlink" title="differenceBy(array, values, iteratee)"></a>differenceBy(array, values, iteratee)</h4><p>类似于difference函数，但是它多接收一个iteratee(迭代器)，使用迭代器分别迭代array和values，把迭代过后的值作为比较用的值。并且这个方法的返回值是一个新数组</p>
-<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token comment">// differenceBy([2.1, 1.2], [2.3, 3.4], Math.floor) -> [1.2]</span>
-<span class="token function">differenceBy</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">&#123;</span><span class="token string">'x'</span><span class="token operator">:</span> <span class="token number">2</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span> <span class="token punctuation">&#123;</span><span class="token string">'x'</span><span class="token operator">:</span> <span class="token number">1</span><span class="token punctuation">&#125;</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token punctuation">&#123;</span><span class="token string">'x'</span><span class="token operator">:</span> <span class="token number">1</span><span class="token punctuation">&#125;</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token string">'x'</span><span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">></span> <span class="token punctuation">[</span><span class="token punctuation">&#123;</span><span class="token string">'x'</span><span class="token operator">:</span> <span class="token number">2</span><span class="token punctuation">&#125;</span><span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-<p><strong>源码</strong></p>
-<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token comment">/**
- * 函数解释：
- * last：获取数组的最后一个元素
- **/</span>
-<span class="token keyword">function</span> <span class="token function">differenceBy</span><span class="token punctuation">(</span><span class="token parameter">array<span class="token punctuation">,</span> <span class="token operator">...</span>values</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">let</span> iteratee <span class="token operator">=</span> <span class="token function">last</span><span class="token punctuation">(</span>values<span class="token punctuation">)</span> <span class="token comment">// 获取迭代器</span>
-    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">isArrayLikeObject</span><span class="token punctuation">(</span>iteratee<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> <span class="token comment">// 判断迭代器是否是数组形状或者Object</span>
-        iteratee <span class="token operator">=</span> <span class="token keyword">undefined</span>
-    <span class="token punctuation">&#125;</span>
-    <span class="token comment">/**
-     * 首先判断传入的array是否是数组形状，
-     * 若为true，使用baseDifference函数返回
-     * 若为false，返回[]
-     **/</span>
-    <span class="token keyword">return</span> <span class="token function">isArrayLike</span><span class="token punctuation">(</span>array<span class="token punctuation">)</span> <span class="token operator">?</span> <span class="token function">baseDifference</span><span class="token punctuation">(</span>array<span class="token punctuation">,</span> <span class="token function">baseFlatten</span><span class="token punctuation">(</span>values<span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> isArrayLikeObject<span class="token punctuation">,</span> <span class="token boolean">true</span><span class="token punctuation">)</span><span class="token punctuation">,</span> iteratee<span class="token punctuation">)</span> <span class="token operator">:</span> 【
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h4 id="differenceWith-array-values-comparator"><a href="#differenceWith-array-values-comparator" class="headerlink" title="differenceWith(array, values, comparator)"></a>differenceWith(array, values, comparator)</h4><p>依旧是类似与difference的一个方法，但是多接收一个comparator(比较器)的函数</p>
-
+        <h2 id="前端部分"><a href="#前端部分" class="headerlink" title="前端部分"></a>前端部分</h2><h3 id="主题功能"><a href="#主题功能" class="headerlink" title="主题功能"></a>主题功能</h3><h4 id="1-1-x"><a href="#1-1-x" class="headerlink" title="1.1.x"></a>1.1.x</h4><ul>
+<li>实现黑夜白天主题功能切换<h4 id="2-x"><a href="#2-x" class="headerlink" title="2.x"></a>2.x</h4></li>
+<li>增减material dark/white实现</li>
+</ul>
+<h3 id="TodoList"><a href="#TodoList" class="headerlink" title="TodoList"></a>TodoList</h3><h4 id="1-1-x-1"><a href="#1-1-x-1" class="headerlink" title="1.1.x"></a>1.1.x</h4><ul>
+<li>下拉列表实现Todo时间选择和事件状态码</li>
+<li>修改事件状态码</li>
+<li>滚动条设置</li>
+<li>在总设置页面实现导入指定格式Todo文件</li>
+</ul>
+<h3 id="BDownloader"><a href="#BDownloader" class="headerlink" title="BDownloader"></a>BDownloader</h3><h4 id="1-0"><a href="#1-0" class="headerlink" title="1.0"></a>1.0</h4><ul>
+<li>通过设置SESSDATA实现登录功能</li>
+<li>通过AV/BV号实现视频搜索功能</li>
+<li>收藏夹下载功能</li>
+<li>单p下载</li>
+<li>全部下载</li>
+<li>显示视频下载进度</li>
+</ul>
+<h3 id=""><a href="#" class="headerlink" title=""></a></h3>
       </div>
       <div class="post-tags-categories">
         
         <div class="tags">
           
-            <a href="/tags/%E6%BA%90%E7%A0%81%E8%A7%A3%E8%AF%BB/" class="">
-              源码解读
+            <a href="/tags/%E7%89%88%E6%9C%AC%E6%96%87%E6%A1%A3/" class="">
+              版本文档
             </a>
           
         </div>
@@ -833,7 +770,7 @@
     </li>
     <li class="post-copyright-link">
     <strong>link:  </strong>
-    <a href="/2021/08/09/lodashread/" target="_blank" title="Lodash源码解读">https://sakurapole.github.io/2021/08/09/lodashread/</a>
+    <a href="/2021/10/26/laityhtoolprojectversiondoc/" target="_blank" title="LaityH开发版本文档">https://sakurapole.github.io/2021/10/26/laityhtoolprojectversiondoc/</a>
     </li>
     <li class="post-copyright-license">
       <strong>Copyright notice:   </strong>
@@ -851,41 +788,22 @@
 
 
 
-  
-  <div class="post-nav-prev post-nav-item">
-    <div class="post-nav-img lazyload" data-original="https://i0.hdslb.com/bfs/album/d32c4dec2b7bdacd62819ec196fdf731e9c0cf53.jpg" style="background-size: cover; 
-      background-position: center center;">
-    </div>
-    <a href="/2021/10/26/laityhtoolprojectversiondoc/" class="post-nav-link">
-      <div class="title">
-        <i class="fa fa-angle-left"></i> Prev:
-        <div class="title-text">LaityH开发版本文档</div>
-      </div>
-      
-      <!-- <div class="content">
-        前端部分主题功能1.1.x
-实现黑夜白天主题功能切换2.x
-增减material dark/white实现
-
-TodoL
-      </div> -->
-    </a>
-  </div>
-
 
 
   
   <div class="post-nav-next post-nav-item">
-    <div class="post-nav-img lazyload" data-original="https://i0.hdslb.com/bfs/album/d32c4dec2b7bdacd62819ec196fdf731e9c0cf53.jpg" style="background-size: cover; 
+    <div class="post-nav-img lazyload" data-original="https://i0.hdslb.com/bfs/album/2e5a4c015bc19e6fc94ac9c3cbc0cd6c9c22195b.png" style="background-size: cover; 
       background-position: center center;">
     </div>
-    <a href="/2021/08/06/laityhtool/" class="post-nav-link">
+    <a href="/2021/08/09/lodashread/" class="post-nav-link">
       <div class="title">
         Next: <i class="fa fa-angle-right"></i>
-        <div class="title-text">LaityH开发文档</div>
+        <div class="title-text">Lodash源码解读</div>
       </div>
       <!-- <div class="content">
-        LaityHTool项目简介（1.0版本更新完毕）LaityHTool是一个我自己想到什么功能就会加在上面的项目，运行于
+        Lodash简介高性能、模块化的JS工具库
+数组方法chunk根据传入的size切分数组，返回一个二维数组结果
+// c
       </div> -->
     </a>
   </div>

@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>LaityH开发版本文档</title>
+      <link href="/2021/10/26/laityhtoolprojectversiondoc/"/>
+      <url>/2021/10/26/laityhtoolprojectversiondoc/</url>
+      
+        <content type="html"><![CDATA[<h2 id="前端部分"><a href="#前端部分" class="headerlink" title="前端部分"></a>前端部分</h2><h3 id="主题功能"><a href="#主题功能" class="headerlink" title="主题功能"></a>主题功能</h3><h4 id="1-1-x"><a href="#1-1-x" class="headerlink" title="1.1.x"></a>1.1.x</h4><ul><li>实现黑夜白天主题功能切换<h4 id="2-x"><a href="#2-x" class="headerlink" title="2.x"></a>2.x</h4></li><li>增减material dark/white实现</li></ul><h3 id="TodoList"><a href="#TodoList" class="headerlink" title="TodoList"></a>TodoList</h3><h4 id="1-1-x-1"><a href="#1-1-x-1" class="headerlink" title="1.1.x"></a>1.1.x</h4><ul><li>下拉列表实现Todo时间选择和事件状态码</li><li>修改事件状态码</li><li>滚动条设置</li><li>在总设置页面实现导入指定格式Todo文件</li></ul><h3 id="BDownloader"><a href="#BDownloader" class="headerlink" title="BDownloader"></a>BDownloader</h3><h4 id="1-0"><a href="#1-0" class="headerlink" title="1.0"></a>1.0</h4><ul><li>通过设置SESSDATA实现登录功能</li><li>通过AV/BV号实现视频搜索功能</li><li>收藏夹下载功能</li><li>单p下载</li><li>全部下载</li><li>显示视频下载进度</li></ul><h3 id=""><a href="#" class="headerlink" title=""></a></h3>]]></content>
+      
+      
+      <categories>
+          
+          <category> 前端 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 版本文档 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Lodash源码解读</title>
       <link href="/2021/08/09/lodashread/"/>
       <url>/2021/08/09/lodashread/</url>
